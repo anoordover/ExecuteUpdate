@@ -8,4 +8,13 @@ public class Credit
 
     public string ReferenceDeclaration { get; set; } = string.Empty;
     public long? DeclarationId { get; set; }
+    
+    public Period Period { get; set; }
+}
+
+public class Period
+{
+    public DateTime StartDate { get; set; }
+
+    public DateTime EndDate { get; set; }
 }
