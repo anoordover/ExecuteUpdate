@@ -10,8 +10,10 @@ public class DemoDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        /*
         modelBuilder.Entity<Credit>()
             .OwnsOne<Period>(c => c.Period);
+    */
     }
 
     public virtual DbSet<Credit> Credits { get; set; }
