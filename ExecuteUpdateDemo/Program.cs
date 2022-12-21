@@ -19,23 +19,37 @@ using var db = sp.GetRequiredService<DemoDbContext>();
 
     Console.WriteLine(credits.Count);
 
-    var s = db.Credits.Where(c => c.Id == 1)
-        .Join(db.Declarations,
-            c => c.ReferenceDeclaration,
-            d => d.Reference,
-            (credit, declaration) => new {credit, declaration})
-        .ExecuteUpdate(calls => calls.SetProperty(
-            c => c.credit.DeclarationId,
-            c => c.declaration.Id));
+    try
+    {
+        var s = db.Credits.Where(c => c.Id == 1)
+            .Join(db.Declarations,
+                c => c.ReferenceDeclaration,
+                d => d.Reference,
+                (credit, declaration) => new {credit, declaration})
+            .ExecuteUpdate(calls => calls.SetProperty(
+                c => c.credit.DeclarationId,
+                c => c.declaration.Id));
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+    }
 
-    var r = db.Credits.Where(c => c.Id == 1)
-        .Select(c => new
-        {
-            credit = c,
-            declaration = db.Declarations
-                .First(d => d.Reference == c.ReferenceDeclaration)
-        })
-        .ExecuteUpdate(calls => calls.SetProperty(
-            c => c.credit.DeclarationId,
-            c => c.declaration.Id));
+    try
+    {
+        var r = db.Credits.Where(c => c.Id == 1)
+            .Select(c => new
+            {
+                credit = c,
+                declaration = db.Declarations
+                    .First(d => d.Reference == c.ReferenceDeclaration)
+            })
+            .ExecuteUpdate(calls => calls.SetProperty(
+                c => c.credit.DeclarationId,
+                c => c.declaration.Id));
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+    }
 }

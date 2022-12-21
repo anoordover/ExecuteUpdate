@@ -11,10 +11,3 @@ public class Credit
     
     public Period Period { get; set; }
 }
-
-public class Period
-{
-    public DateTime StartDate { get; set; }
-
-    public DateTime EndDate { get; set; }
-}

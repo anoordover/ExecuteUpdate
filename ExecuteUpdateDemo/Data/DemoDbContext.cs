@@ -12,6 +12,8 @@ public class DemoDbContext : DbContext
     {
         modelBuilder.Entity<Credit>()
             .OwnsOne<Period>(c => c.Period);
+        modelBuilder.Entity<Declaration>()
+            .OwnsOne<Period>(c => c.Period);
     }
 
     public virtual DbSet<Credit> Credits { get; set; }
