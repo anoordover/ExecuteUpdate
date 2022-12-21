@@ -52,4 +52,24 @@ using var db = sp.GetRequiredService<DemoDbContext>();
     {
         Console.WriteLine(e);
     }
+
+    try
+    {
+        var r = db.Credits.Where(c => c.Id == 1)
+            .Select(c => new
+            {
+                credit = c,
+                declaration = db.Declarations
+                    .Where(d => d.Reference == c.ReferenceDeclaration)
+                    .Select(d => d.Id)
+                    .First()
+            })
+            .ExecuteUpdate(calls => calls.SetProperty(
+                c => c.credit.DeclarationId,
+                c => c.declaration));
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+    }
 }
